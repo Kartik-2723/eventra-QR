@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@EntityListeners(AuditingEntityListener.class)
 public class Event {
 
     @Id
@@ -29,10 +31,10 @@ public class Event {
     @Column(name = "name",nullable = false)
     private String name;
 
-    @Column(name = "start_time",nullable = true)
+    @Column(name = "event_start",nullable = true)
     private LocalDateTime start;
 
-    @Column(name = "end_time",nullable = true)
+    @Column(name = "event_end",nullable = true)
     private LocalDateTime end;
 
     @Column(name = "venue",nullable = false)
@@ -58,7 +60,7 @@ public class Event {
     @ManyToMany(mappedBy = "staffingEvents")
     private List<User> staff = new ArrayList<>();
 
-    @OneToMany(mappedBy = "event",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "event",cascade = CascadeType.ALL,orphanRemoval = true)
     private List<TicketType> ticketTypes = new ArrayList<>();
 
     @CreatedDate

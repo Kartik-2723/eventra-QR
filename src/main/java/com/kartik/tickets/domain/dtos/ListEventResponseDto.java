@@ -1,6 +1,10 @@
-package com.kartik.tickets.domain;
+package com.kartik.tickets.domain.dtos;
+
 
 import com.kartik.tickets.domain.entities.EventStatusEnum;
+import jakarta.persistence.Column;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,11 +12,13 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateEventRequest {
+public class ListEventResponseDto {
+    private UUID id;
     private String name;
     private LocalDateTime start;
     private LocalDateTime end;
@@ -20,5 +26,5 @@ public class CreateEventRequest {
     private LocalDateTime salesStart;
     private LocalDateTime salesEnd;
     private EventStatusEnum status;
-    private List<CreateTicketTypeRequest> ticketTypes = new ArrayList<>();
+    private List<ListEventTicketTypeResponseDto> ticketTypes= new ArrayList<>();
 }

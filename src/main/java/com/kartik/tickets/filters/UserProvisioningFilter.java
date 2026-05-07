@@ -30,23 +30,19 @@ public class UserProvisioningFilter extends OncePerRequestFilter {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        if(authentication!=null
-        && authentication.isAuthenticated()
-        && authentication.getPrincipal() instanceof Jwt jwt){
+        if(authentication != null && authentication.isAuthenticated() && authentication.getPrincipal() instanceof Jwt jwt){
             UUID keycloakID = UUID.fromString(jwt.getSubject());
 
             if(!userRepository.existsById(keycloakID)){
-
                 User user = new User();
                 user.setId(keycloakID);
-                user.setName(jwt.getClaimAsString("preferred-username"));
+                user.setName(jwt.getClaimAsString("preferred_username"));
                 user.setEmail(jwt.getClaimAsString("email"));
-
                 userRepository.save(user);
-
             }
 
-            filterChain.doFilter(request,response);
         }
+
+        filterChain.doFilter(request, response);
     }
 }
