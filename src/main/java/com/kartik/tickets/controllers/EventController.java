@@ -15,8 +15,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
+import com.kartik.tickets.util.JwtUtil;
 
 import java.util.UUID;
+
+import static com.kartik.tickets.util.JwtUtil.parseUserId;
 
 @RestController
 @RequestMapping("/api/v1/events")
@@ -99,7 +102,4 @@ public class EventController {
     }
 
 
-    private UUID parseUserId(Jwt jwt){
-        return UUID.fromString(jwt.getSubject());
-    }
 }
